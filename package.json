@@ -1,0 +1,29 @@
+{
+  "name": "memg",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "serve": "node index",
+    "start": "nodemon index"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-server": "^2.9.15",
+    "apollo-server-express": "^2.9.15",
+    "bcryptjs": "^2.4.3",
+    "graphql": "^14.5.8",
+    "graphql-import": "^0.7.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.8.3",
+    "react-router-dom": "^5.1.2",
+    "semantic-ui-css": "^2.4.1",
+    "semantic-ui-react": "^0.88.2",
+    "validate.js": "^0.13.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  }
+}
