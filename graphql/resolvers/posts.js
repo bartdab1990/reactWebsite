@@ -1,7 +1,7 @@
-const{AuthenticationError, UserInputError} = require('apollo-server');
+const { AuthenticationError, UserInputError } = require("apollo-server");
 
-const Post = require('../../models/Post');
-const checkAuth = require('../../util/check-auth');
+const Post = require("../../models/Post");
+const checkAuth = require("../../util/check-auth");
 
 module.exports = {
   Query: {
@@ -10,7 +10,7 @@ module.exports = {
         const posts = await Post.find().sort({ createdAt: -1 });
         return posts;
       } catch (err) {
-          throw new Error(err);
+        throw new Error(err);
       }
     },
     async getPost(_, { postId }) {
@@ -29,8 +29,8 @@ module.exports = {
   Mutation: {
     async createPost(_, { body }, context) {
       const user = checkAuth(context);
-      if(args.body.trim()===''){
-        throw new Error('Post body must not be empty');
+      if (body.trim() === "") {
+        throw new Error("Post body must not be empty");
       }
 
       const newPost = new Post({
@@ -42,7 +42,7 @@ module.exports = {
 
       const post = await newPost.save();
 
-      context.pubsub.publish('NEW_POST',{newPost: post});
+      context.pubsub.publish("NEW_POST", { newPost: post });
       return post;
     },
     async deletePost(_, { postId }, context) {
@@ -59,17 +59,14 @@ module.exports = {
         throw new Error(err);
       }
     },
-    async likePost(_,{postId}, context)
-    {
-      const {username} = checkAuth(context);
+    async likePost(_, { postId }, context) {
+      const { username } = checkAuth(context);
       const post = await Post.findById(postId);
-      if(post){
-        if(post.likes.find(like => like.username===username))
-        {
-          //post already like 
+      if (post) {
+        if (post.likes.find(like => like.username === username)) {
+          //post already like
           post.likes = post.likes.filter(like => like.username !== username);
-          
-        }else{
+        } else {
           post.likes.push({
             username,
             createdAt: new Date().toISOString()
@@ -78,14 +75,14 @@ module.exports = {
         }
         await post.save();
         return post;
-      } else{
-        throw new UserInputError('Post not found');
+      } else {
+        throw new UserInputError("Post not found");
       }
     }
   },
   Subscription: {
-    newPost:{
-      subscribe:(_,__,{pubsub})=> pubsub.asyncIterator('NEW_POST')
+    newPost: {
+      subscribe: (_, __, { pubsub }) => pubsub.asyncIterator("NEW_POST")
     }
   }
 };
