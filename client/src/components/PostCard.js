@@ -1,11 +1,12 @@
-import React, { useContext } from "react";
-import { Button, Card, Image, Icon, Label } from "semantic-ui-react";
-import { Link } from "react-router-dom";
-import moment from "moment";
+import React, { useContext } from 'react';
+import { Button, Card, Icon, Label, Image } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
+import moment from 'moment';
 
-import { AuthContext } from "../context/auth";
-import LikeButton from "./LikeButton";
-import DeleteButton from "./DeleteButton";
+import { AuthContext } from '../context/auth';
+import LikeButton from './LikeButton';
+import DeleteButton from './DeleteButton';
+
 function PostCard({
   post: { body, createdAt, id, username, likeCount, commentCount, likes }
 }) {

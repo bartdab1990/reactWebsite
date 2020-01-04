@@ -1,10 +1,9 @@
-import React, { useState } from "react";
-import gql from "graphql-tag";
-import { useMutation } from "@apollo/react-hooks";
+import React, { useState } from 'react';
+import gql from 'graphql-tag';
+import { useMutation } from '@apollo/react-hooks';
+import { Button, Confirm, Icon } from 'semantic-ui-react';
 
-import { Button, Confirm, Icon } from "semantic-ui-react";
-
-import { FETCH_POSTS_QUERY } from "../util/graphql";
+import { FETCH_POSTS_QUERY } from '../util/graphql';
 
 function DeleteButton({ postId, callback }) {
   const [confirmOpen, setConfirmOpen] = useState(false);
@@ -15,11 +14,9 @@ function DeleteButton({ postId, callback }) {
       const data = proxy.readQuery({
         query: FETCH_POSTS_QUERY
       });
-      data.getPosts = data.getPosts.filter(p => p.id !== postId);
-      proxy.writeQuery({ query: FETCH_POSTS_QUERY, data });
-      if (callback) {
-        callback();
-      }
+      const delete_post = data.getPosts.filter((p) => p.id !== postId);
+      proxy.writeQuery({ query: FETCH_POSTS_QUERY, data: {getPosts: delete_post}});
+      if (callback) callback();
     },
     variables: {
       postId
