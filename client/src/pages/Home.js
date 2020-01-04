@@ -11,11 +11,7 @@ function Home() {
   const { user } = useContext(AuthContext);
   const [posts, setPosts] = useState([]);
   const { loading, data } = useQuery(FETCH_POSTS_QUERY);
-  // let posts = []
-  // if(data && !loading){
-  //   posts=data.getPosts
-  // }
-  
+ 
   useEffect(() => {
     if (data) {
       setPosts(data.getPosts);
